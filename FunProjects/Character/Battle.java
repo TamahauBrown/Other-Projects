@@ -31,7 +31,7 @@ class Battle
 			if(decision.toLowerCase().equals("a")) 
 			{
 				endOfBattle = AttackPhase(player, opponent, 0);
-				System.out.println("Hikari HP " + opponent.getHealth());
+				System.out.println(opponent.getName() + " HP " + opponent.getHealth());
 				if(endOfBattle)
 				{
 					Result();
@@ -72,7 +72,6 @@ class Battle
 
 		if(damage <= 1)
 		{
-			System.out.println("DAMAGE " + damage);
 			return 1;
 		}
 		else
