@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 class Battle
 {
@@ -24,7 +25,7 @@ class Battle
 	{
 		while(!endOfBattle)
 		{
-			System.out.println("Attack or defend?");
+			System.out.println("Attack (type a) or defend? (type d)");
 			String decision = sc.nextLine();
 
 			if(decision.toLowerCase().equals("a")) 
@@ -47,7 +48,7 @@ class Battle
 					break;
 				}
 			}
-			else if(decision.toLowerCase().equals("defend"))
+			else if(decision.toLowerCase().equals("d"))
 			{
 				endOfBattle = AttackPhase(opponent, player, 1);
 				System.out.println("HP: " + player.getHealth());
@@ -65,12 +66,13 @@ class Battle
 	public int CalculateAttack(int attack, int defense, int defend)
 	{
 		if(defend == 0)
-			damage = attack * 3 - defense;
+			damage = (attack * attack) / defense;
 		else
 			damage = attack / defense;
 
 		if(damage <= 1)
 		{
+			System.out.println("DAMAGE " + damage);
 			return 1;
 		}
 		else
@@ -83,15 +85,37 @@ class Battle
 	{
 		damage = CalculateAttack(attacker.getAttack(), defender.getDef(), defend);
 
-		System.out.println(defender.getName() + " took " + damage + " damage");
-
-		defender.setHealth(damage);
-
-		if(defender.getHealth() <= 0)
+		int evaded = Evaded(defender);
+		
+		if(evaded == 0) 
 		{
-			return true;
+			System.out.println(defender.getName() + " took " + damage + " damage");
+
+			defender.setHealth(damage);
+			if(defender.getHealth() <= 0)
+			{
+				return true;
+			}
+		}
+		else
+		{
+			System.out.println(defender.getName() + " dodged the attack");
 		}
 		return false;
+	}
+
+	public int Evaded(PlayableCharacter defender)
+	{
+		Random rand = new Random();
+		int chance = rand.nextInt(100) + 1;
+		if(chance < defender.getEvasion())
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 	public void Result()
