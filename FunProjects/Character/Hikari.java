@@ -29,10 +29,10 @@ class Hikari extends PlayableCharacter
 	/*
 		Hikari's second ultimate which does a devastating amount of damage to his opponent
 	*/
-	public boolean ArrowOfLight(PlayableCharacter player, Hikari opponent)
+	public boolean ArrowOfLight(Fighter player, Fighter opponent, int playNum, int oppNum)
 	{
 		//Calls the battle class to be able to do the magic attack phase
-		Battle battle = new Battle(player);
+		BattleMechanics battle = new BattleMechanics(player, opponent, playNum, oppNum);
 
 		//Buffs Hikari's magic attack for the ultimate
 		int damage = super.getMagicAtk() + 500;
